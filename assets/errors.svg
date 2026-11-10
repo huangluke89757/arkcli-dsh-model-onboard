@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="470" viewBox="0 0 1200 470" role="img" aria-label="用错误码隔离故障层的诊断图">
+  <defs>
+    <style>
+      .t  { font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; }
+      .ttl{ font-size: 28px; font-weight: 700; fill: #3F4348; }
+      .sub{ font-size: 14.5px; fill: #7B8087; }
+      .code{ font-family: "Cascadia Mono", Consolas, monospace; font-size: 26px; font-weight: 700; fill: #FFFFFF; }
+      .h  { font-size: 17px; font-weight: 700; fill: #3F4348; }
+      .b  { font-size: 13.5px; fill: #5C6167; }
+      .n  { font-size: 12.5px; fill: #7B8087; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="470" fill="#F7F6F3"/>
+
+  <text class="t ttl" x="56" y="56">一个请求打不对，先看错误码，别先换 Key</text>
+  <text class="t sub" x="56" y="82">用不存在的模型名发一次请求（零 token 成本），错误码会直接告诉你坏在哪一层</text>
+
+  <!-- 4 columns -->
+  <g>
+    <rect x="56" y="112" width="256" height="286" rx="14" fill="#FFFFFF" stroke="#D9D6CF"/>
+    <rect x="56" y="112" width="256" height="62" rx="14" fill="#A88A7C"/>
+    <text class="t code" x="80" y="154">401</text>
+    <text class="t h" x="80" y="204">鉴权层</text>
+    <text class="t b" x="80" y="232">Key 错 / Key 与端点</text>
+    <text class="t b" x="80" y="252">不匹配 / 端点走错数据面</text>
+    <text class="t b" x="80" y="286">先核对 baseURL，</text>
+    <text class="t b" x="80" y="306">不要急着换 Key</text>
+  </g>
+
+  <g>
+    <rect x="336" y="112" width="256" height="286" rx="14" fill="#FFFFFF" stroke="#D9D6CF"/>
+    <rect x="336" y="112" width="256" height="62" rx="14" fill="#7C8B8F"/>
+    <text class="t code" x="360" y="154">403</text>
+    <text class="t h" x="360" y="204">权限层</text>
+    <text class="t b" x="360" y="232">实名未完成 / 模型或套餐</text>
+    <text class="t b" x="360" y="252">未开通 / 白名单</text>
+    <text class="t b" x="360" y="286">去控制台核对开通</text>
+    <text class="t b" x="360" y="306">状态，不是改代码</text>
+  </g>
+
+  <g>
+    <rect x="616" y="112" width="256" height="286" rx="14" fill="#FFFFFF" stroke="#D9D6CF"/>
+    <rect x="616" y="112" width="256" height="62" rx="14" fill="#6E8578"/>
+    <text class="t code" x="640" y="154">404</text>
+    <text class="t h" x="640" y="204">模型层</text>
+    <text class="t b" x="640" y="232">鉴权已通过，只是模型名</text>
+    <text class="t b" x="640" y="252">或套餐不匹配</text>
+    <text class="t b" x="640" y="286">这是好消息：端点对、</text>
+    <text class="t b" x="640" y="306">Key 对，只改模型 ID</text>
+  </g>
+
+  <g>
+    <rect x="896" y="112" width="248" height="286" rx="14" fill="#FFFFFF" stroke="#D9D6CF"/>
+    <rect x="896" y="112" width="248" height="62" rx="14" fill="#7A8AA8"/>
+    <text class="t code" x="920" y="154">429</text>
+    <text class="t h" x="920" y="204">额度层</text>
+    <text class="t b" x="920" y="232">限流 / 套餐额度耗尽</text>
+    <text class="t b" x="920" y="252">或 RPM 打满</text>
+    <text class="t b" x="920" y="286">查用量，别重试轰炸</text>
+    <text class="t b" x="920" y="306">（会继续扣额度）</text>
+  </g>
+
+  <text class="t n" x="56" y="438">注意：探针通过只证明「鉴权 + 端点」对，不证明参数拼装正确；401 也不必然等于 Key 无效——同一把 Key 换错端点同样返回 401。</text>
+</svg>

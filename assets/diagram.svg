@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660" role="img" aria-label="方舟模型接入 DSH 的五步流程示意图">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8A8F98"/>
+    </marker>
+    <style>
+      .t  { font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; }
+      .ttl{ font-size: 30px; font-weight: 700; fill: #3F4348; }
+      .sub{ font-size: 15px; fill: #7B8087; }
+      .num{ font-size: 15px; font-weight: 700; fill: #FFFFFF; }
+      .h  { font-size: 17px; font-weight: 700; fill: #3F4348; }
+      .b  { font-size: 13.5px; fill: #5C6167; }
+      .mono{ font-family: "Cascadia Mono", Consolas, monospace; font-size: 12.5px; fill: #5C6167; }
+      .note{ font-size: 13px; fill: #7B8087; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="660" fill="#F7F6F3"/>
+
+  <text class="t ttl" x="60" y="66">方舟模型接入 DSH · 五步流程</text>
+  <text class="t sub" x="60" y="94">前四步都做到零成本，只有第 ④ 步产生 token；任何一步失败都能整文件回滚</text>
+
+  <!-- step cards -->
+  <g>
+    <rect x="60" y="128" width="196" height="150" rx="14" fill="#FFFFFF" stroke="#D9D6CF"/>
+    <circle cx="92" cy="160" r="14" fill="#7C8B8F"/>
+    <text class="t num" x="87" y="165">1</text>
+    <text class="t h" x="118" y="166">判定端点</text>
+    <text class="t mono" x="78" y="200">arkcli +chat</text>
+    <text class="t mono" x="78" y="220">--dry-run</text>
+    <text class="t b" x="78" y="248">读 base_url 与</text>
+    <text class="t b" x="78" y="268">credential_kind</text>
+  </g>
+
+  <g>
+    <rect x="286" y="128" width="196" height="150" rx="14" fill="#FFFFFF" stroke="#D9D6CF"/>
+    <circle cx="318" cy="160" r="14" fill="#7C8B8F"/>
+    <text class="t num" x="313" y="165">2</text>
+    <text class="t h" x="344" y="166">零成本探针</text>
+    <text class="t mono" x="304" y="200">model: xyz-不存在</text>
+    <text class="t b" x="304" y="228">只产生错误码，</text>
+    <text class="t b" x="304" y="248">不产生 token 费用</text>
+    <rect x="304" y="262" width="158" height="4" rx="2" fill="#E6DFD3"/>
+  </g>
+
+  <g>
+    <rect x="512" y="128" width="196" height="150" rx="14" fill="#FFFFFF" stroke="#D9D6CF"/>
+    <circle cx="544" cy="160" r="14" fill="#7C8B8F"/>
+    <text class="t num" x="539" y="165">3</text>
+    <text class="t h" x="570" y="166">改配置</text>
+    <text class="t mono" x="530" y="200">cordis.patch.yml</text>
+    <text class="t b" x="530" y="228">仅追加 models 项</text>
+    <text class="t b" x="530" y="248">密钥只写 apiKeyEnv</text>
+    <text class="t b" x="530" y="268">改前先备份 + SHA256</text>
+  </g>
+
+  <g>
+    <rect x="738" y="128" width="196" height="150" rx="14" fill="#FFFFFF" stroke="#D9D6CF"/>
+    <circle cx="770" cy="160" r="14" fill="#7C8B8F"/>
+    <text class="t num" x="765" y="165">4</text>
+    <text class="t h" x="796" y="166">最小真调用</text>
+    <text class="t mono" x="756" y="200">max_output_tokens</text>
+    <text class="t mono" x="756" y="220">= 16</text>
+    <text class="t b" x="756" y="248">验 HTTP 200 +</text>
+    <text class="t b" x="756" y="268">response id</text>
+  </g>
+
+  <g>
+    <rect x="964" y="128" width="176" height="150" rx="14" fill="#FFFFFF" stroke="#D9D6CF"/>
+    <circle cx="996" cy="160" r="14" fill="#A88A7C"/>
+    <text class="t num" x="991" y="165">5</text>
+    <text class="t h" x="1022" y="166">失败回滚</text>
+    <text class="t mono" x="982" y="200">cover backup</text>
+    <text class="t b" x="982" y="228">整文件覆盖回去</text>
+    <text class="t b" x="982" y="248">不逐行手改</text>
+  </g>
+
+  <!-- arrows -->
+  <line x1="256" y1="203" x2="286" y2="203" stroke="#8A8F98" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="482" y1="203" x2="512" y2="203" stroke="#8A8F98" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="708" y1="203" x2="738" y2="203" stroke="#8A8F98" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="934" y1="203" x2="964" y2="203" stroke="#8A8F98" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- branch under step 2 -->
+  <path d="M384,278 L384,320 L300,320" stroke="#8A8F98" stroke-width="1.4" fill="none"/>
+  <path d="M384,320 L468,320" stroke="#8A8F98" stroke-width="1.4" fill="none" marker-end="url(#arrow)"/>
+  <g>
+    <rect x="196" y="336" width="176" height="86" rx="12" fill="#F1EFEA" stroke="#D9D6CF"/>
+    <text class="t h" x="212" y="362">401 · 鉴权层</text>
+    <text class="t b" x="212" y="386">Key 错 / 端点走错</text>
+    <text class="t b" x="212" y="406">先核对 baseURL，别换 Key</text>
+  </g>
+  <g>
+    <rect x="396" y="336" width="176" height="86" rx="12" fill="#F1EFEA" stroke="#D9D6CF"/>
+    <text class="t h" x="412" y="362">404 · 模型层</text>
+    <text class="t b" x="412" y="386">鉴权已通过</text>
+    <text class="t b" x="412" y="406">只是模型名 / 套餐不匹配</text>
+  </g>
+
+  <!-- note -->
+  <rect x="60" y="462" width="1080" height="128" rx="14" fill="#EFEDE7" stroke="#D9D6CF"/>
+  <text class="t h" x="84" y="496">一个坑：端点不等于文档默认值</text>
+  <text class="t b" x="84" y="524">Agent Plan（套餐）= /api/plan/v3 · Coding Plan（套餐）= /api/coding · 平台按量 = /api/v3</text>
+  <text class="t b" x="84" y="548">套餐 Key 走错数据面时，服务端返回的是 401「API key invalid」，最容易被读成「Key 无效」——</text>
+  <text class="t b" x="84" y="572">所以第 1 步必须从 CLI 的 execution_context 读权威 base_url，而不是照抄文档默认端点。</text>
+
+  <text class="t note" x="60" y="628">事实来源：2026-11-10 实测（Agent Plan 个人版 · cn-beijing）；端点策略变更以 arkcli --dry-run 输出为准</text>
+</svg>

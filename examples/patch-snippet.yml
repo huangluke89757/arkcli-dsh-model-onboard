@@ -1,0 +1,31 @@
+# DSH 配置片段（cordis.patch.yml · llm-pi-ai 路由）
+# 位置：C:\Users\Sxg\.dsh\profiles\desktop\cordis.patch.yml
+# 说明：这是**同一个 provider 下追加模型**的最小写法；密钥只写 ref 名，绝不写明文。
+
+- id: llm-pi-ai
+  name: "@deepseek-ai/dsh-llm-pi-ai"
+  config:
+    providers:
+      arkv3:
+        displayName: 方舟大模型 v3
+        apiKeyEnv: ARKV3_API_KEY          # 由 DSH「设置 → 模型」页写入凭据，这里只引用名字
+        api: openai-responses
+        baseURL: https://ark.cn-beijing.volces.com/api/plan/v3   # Agent Plan 数据面（不是 /api/v3）
+        models:
+          - id: doubao-seed-evolving
+            name: doubao-seed-evolving
+            input:
+              - text
+          - id: deepseek-v4.1-flash
+            name: deepseek-v4.1-flash
+            input:
+              - text
+          - id: kimi-k3.1-pro
+            name: kimi-k3.1-pro
+            input:
+              - text
+          - id: glm-5.3
+            name: glm-5.3
+            input:
+              - text
+          # 继续追加时照抄三段：id（调用 ID，不要自造版本号）/ name（显示名）/ input（只支持 text、image）

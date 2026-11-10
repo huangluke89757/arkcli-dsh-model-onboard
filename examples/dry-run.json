@@ -1,0 +1,15 @@
+{
+  "_note": "arkcli +chat --dry-run 输出的节选：只列本次接入实际读取并用到的字段；值来自 2026-11-10 实测（Agent Plan 个人版 · cn-beijing）。model 分别为 doubao-seed-evolving / deepseek-v4.1-flash / kimi-k3.1-pro / glm-5.3 时，以下三个字段完全一致。",
+  "summary": {
+    "execution_context": {
+      "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+      "credential_kind": "agent_plan",
+      "data_plane": "agent_plan"
+    }
+  },
+  "_how_to_read": {
+    "base_url": "权威端点。agent_plan 对应 /api/plan/v3（Responses 协议）；platform 按量才是 /api/v3；coding plan 是 /api/coding（Anthropic Messages）。",
+    "credential_kind": "决定你用哪把 Key、哪套计费；套餐 Key 与按量 Key 不可跨数据面混用。",
+    "data_plane": "确认走的是套餐数据面，而不是平台按量数据面。"
+  }
+}

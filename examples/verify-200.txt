@@ -1,0 +1,22 @@
+# 最小真实调用验真记录（2026-11-10 · Agent Plan 个人版 · cn-beijing）
+
+```
+请求   POST https://ark.cn-beijing.volces.com/api/plan/v3/responses
+头部   Authorization: Bearer <套餐 API Key>
+body   {"model":"<模型调用 ID>","input":"hi","max_output_tokens":16}
+期望   HTTP 200 + 返回体 model 为解析后的真实版本 + 有以 resp_ 开头的 id
+说明   status=incomplete 表示被 16 token 上限截断，属预期行为，不是错误
+```
+
+| 请求的模型 ID | HTTP | 实际解析版本 | response id |
+|---|---|---|---|
+| `doubao-seed-evolving` | 200 | `doubao-seed-evolving` | （随后在 DSH 内实跑通过：usage 事件记录 53,936 tokens） |
+| `deepseek-v4.1-flash` | 200 | `deepseek-v4-1-flash-261017` | `resp_021794321187377388e10ad0dcd28daa4414437ebb5a8574601ef` |
+| `kimi-k3.1-pro` | 200 | `kimi-k3-1-pro-261024` | `resp_021794321188624888862656ddb6bf8fba16f467f9d03d92a3d2d` |
+| `glm-5.3` | 200 | `glm-5.3` | `resp_021794321190168b97e702619832bacb4ebf6c3ac1ede67cd3e5e` |
+
+补充说明：
+
+- 「实际解析版本」与请求 ID 不同的（如 `deepseek-v4.1-flash` → `deepseek-v4-1-flash-261017`）是正常的版本别名解析，说明路由正确。
+- 验真必须**逐个模型**做一次，而不是「配置写进去了」就当成功——本次同一端点下 `doubao-seed-evolving` 通过，不代表其他模型一定在套餐覆盖范围内。
+- 全程只用了 `max_output_tokens=16`，单次成本可忽略；真正的成本风险在「拿付费调用反复试端点」，这正是本流程要避免的。
